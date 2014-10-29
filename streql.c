@@ -2,11 +2,12 @@
 
 // The core function: test two regions of memory for bytewise equality.
 static int equals_internal(const char *x, unsigned int xlen, const char *y, unsigned int ylen) {
-  if (xlen != ylen) return 0;
-
+  int minlen = ( xlen > ylen ) ? ylen : xlen;
   int i, result = 0;
-  for (i = 0; i < xlen; i++) result |= x[i] ^ y[i];
-  return result == 0;
+
+  for (i = 0; i < minlen; i++) result |= x[i] ^ y[i];
+
+  return ( xlen == ylen ) && ( result == 0 );
 }
 
 
